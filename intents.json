@@ -1,0 +1,34 @@
+{"intents": [
+    {
+        "tag": "greetings",
+        "patterns": ["hello", "hi", "good day", "greeting"],
+        "responses": ["Hello, Sir", "What's up, Sir", "What can I do for you? Sir"]
+    },
+    {
+        "tag":"goodbye",
+        "patterns": ["good bye", "thank you", "i am leaving", "good night"],
+        "responses": ["Good Bye, Sir", "Have a nice day, Sir", "Will meet you soon, Sir"]
+    },
+    {
+        "tag": "age",
+        "patterns": ["how old are you", "what is your age", "age", "years"],
+        "responses": ["I am 1 day old", "I was compiled on 9 January 2021"]
+    },
+    {
+        "tag": "name",
+        "patterns": ["name", "what should i call you", "who are you", "tell me your name"],
+        "responses": ["I am Speak, a Text to Speech bot."]
+    },
+    {
+        "tag": "movie",
+        "patterns": ["movie", "suggest some shows", "must watch"],
+        "responses": ["I would suggest Harry Potter Series.", "Attack on Titan is a good choice."]
+    },
+    {
+        "tag": "book",
+        "patterns": ["book", "suggest some novels", "must read"],
+        "responses": ["I would suggest Harry Potter Series.", "The Alchemist is a good choice."]
+    }
+
+]
+}
