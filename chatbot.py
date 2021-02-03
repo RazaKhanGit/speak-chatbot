@@ -4,9 +4,10 @@ import pickle
 import numpy as np
 import nltk
 
+
 from nltk.stem import WordNetLemmatizer
 from tensorflow.keras.models import load_model
-
+nltk.download('wordnet')
 lemmatizer = WordNetLemmatizer()
 intents = json.loads(open("intents.json").read())
 
@@ -16,8 +17,8 @@ model = load_model('speakModel.h5')
 
 def clean_up_sentence(sentence):
     sentence_words = nltk.word_tokenize(sentence)
-    sentence_words = [lemmatizer.lemmatize(word) for word in sentence_words]
-
+    sentence_words = [lemmatizer.lemmatize(word.lower()) for word in sentence_words]
+    print(sentence_words)
     return sentence_words
 
 def bag_of_words(sentence, words):
@@ -28,19 +29,19 @@ def bag_of_words(sentence, words):
             if words == w:
                 bag[i] = 1
     
-    return np.array(bag)
+    return (np.array(bag))
 
 def predict_class(sentence, model):
-
     bow = bag_of_words(sentence, words)
     res = model.predict(np.array([bow]))[0]
-    ERROR_THERSHOLD = 0.25
+    ERROR_THERSHOLD = 0.20
     results = [[i, r] for i, r in enumerate(res) if r > ERROR_THERSHOLD]
 
     results.sort(key=lambda x: x[1], reverse=True)
     return_list = []
     for r in results:
         return_list.append({'intent': classes[r[0]], 'probability': str(r[1])})
+    print(return_list)
     return return_list
 
 def get_response(intent_list,  intent_json):
