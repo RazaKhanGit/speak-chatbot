@@ -27,7 +27,7 @@ for intent in intents['intents']:   #search for intents as in json
         if intent['tag'] not in classes:    #add tag to classes if not present
             classes.append(intent['tag'])
 
-words = [lemmatizer.lemmatize(word) for word in words if word not in ignore_letters]    #lemmatize the word except the ignore_letters
+words = [lemmatizer.lemmatize(word.lower()) for word in words if word not in ignore_letters]    #lemmatize the word except the ignore_letters
 words = sorted(set(words))  #remove repitions and convert set to list
 classes = sorted(set(classes))
 
@@ -59,12 +59,13 @@ model.add(Dense(128, input_shape = (len(train_x[0]), ), activation = 'relu')) #a
 model.add(Dropout(0.5)) #adding dropout layer to prevent overfitting
 model.add(Dense(64, activation = 'relu'))
 model.add(Dropout(0.5))
+
 model.add(Dense(len(train_y[0]), activation = 'softmax')) #using softmax as probability is required
 
 sgd = SGD(lr = 0.01, decay = 1e-6, momentum = 0.9, nesterov = True) #stochastic gradient descent
 model.compile(loss='categorical_crossentropy', optimizer = sgd, metrics = ['accuracy']) #compiling model using categorical as morethan 2 classes are there
 
-hist = model.fit(np.array(train_x), np.array(train_y), epochs = 200, batch_size = 5, verbose = 1) #fitting the model 200 times
+hist = model.fit(np.array(train_x), np.array(train_y), epochs = 300, batch_size = 5, verbose = 1) #fitting the model 200 times
 
 model.save('speakModel.h5', hist)
 print("[+]Done")
